@@ -33,28 +33,28 @@ public class RobotTask implements Runnable{
     public void run(){
         try{
             for(int i = 0; i < carsToAssemble; i++){
-                status = "CHECKING_SAFETY";
+                setStatus("CHECKING_SAFETY");
                 supervisor.checkEmergencyStop();
 
-                status = "WAITING_BATTERY";
+                setStatus("WAITING_BATTERY");
                 conveyorBelt.takeBattery();
 
-                status = "WAITING_STATION";
+                setStatus("WAITING_STATION");
                 int stationId = solderingCentre.occupyStation();
                 try{
-                    status = "WELDING (at station " + stationId + ")";
+                    setStatus("WELDING (at station " + stationId + ")");
                     // Simulate welding time
                     Thread.sleep(600);
                 } finally {
                     solderingCentre.releaseStation(stationId);
                 }
 
-                status = "SIGNING_BOARD";
-                registryBoard.signCertificate(robotName);
+                setStatus("SIGNING_BOARD");
+                registryBoard.signCertificate();
             }
-            status = "FINISHED";
+            setStatus("FINISHED");
         } catch (InterruptedException e) {
-            status = "INTERRUPTED";
+            setStatus("INTERRUPTED");
             Thread.currentThread().interrupt();
         }
     }

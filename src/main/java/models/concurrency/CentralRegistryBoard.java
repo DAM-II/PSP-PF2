@@ -11,7 +11,7 @@ public class CentralRegistryBoard {
         this.signedCertificates = 0;
     }
 
-    public void signCertificate(String robotName) throws InterruptedException{
+    public void signCertificate() throws InterruptedException{
         registryMutex.acquire();
         try{
             // Simulate signing quality certificate
